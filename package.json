@@ -18,7 +18,10 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "migrate:create": "ts-node ./node_modules/typeorm/cli.js migration:create -n",
+    "migrate:up": "ts-node ./node_modules/typeorm/cli.js migration:run",
+    "migrate:down": "ts-node ./node_modules/typeorm/cli.js migration:revert"
   },
   "dependencies": {
     "@apollo/federation": "^0.38.1",
@@ -49,7 +52,7 @@
     "@nestjs/microservices": "^9.4.2",
     "@nestjs/mongoose": "^9.2.2",
     "@nestjs/passport": "^9.0.3",
-    "@nestjs/platform-express": "^9.0.0",
+    "@nestjs/platform-express": "^9.4.2",
     "@nestjs/platform-fastify": "^9.4.2",
     "@nestjs/platform-socket.io": "^9.4.2",
     "@nestjs/platform-ws": "^9.4.2",
@@ -73,6 +76,8 @@
     "cookie-parser": "^1.4.6",
     "csrf-csrf": "^2.2.4",
     "csurf": "^1.11.0",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
     "express-session": "^1.17.3",
     "graphql": "^16.6.0",
     "graphql-query-complexity": "^0.12.0",
@@ -88,6 +93,7 @@
     "nats": "^2.14.0",
     "nest-commander": "^3.7.1",
     "nestjs-cls": "^3.4.0",
+    "nestjs-i18n": "^10.2.6",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
     "pg": "^8.11.0",
