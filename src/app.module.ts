@@ -1,12 +1,14 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import * as path from 'path';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { AcceptLanguageResolver, I18nJsonLoader, I18nModule, QueryResolver } from 'nestjs-i18n';
 import { utilities as nestWinstonModuleUtilities, WinstonModule } from 'nest-winston';
 import * as winston from 'winston';
+import path, { join } from 'path';
 import  DailyRotateFile from 'winston-daily-rotate-file';
+import { HttpModule } from '@nestjs/axios';
+import { ServeStaticModule } from '@nestjs/serve-static';
 
 @Module({
     imports: [
@@ -25,6 +27,18 @@ import  DailyRotateFile from 'winston-daily-rotate-file';
             verboseMemoryLeak: false,
             // disable throwing uncaughtException if an error event is emitted and it has no listeners
             ignoreErrors: false,
+        }),
+
+        HttpModule.registerAsync({
+            useFactory: () => ({
+                timeout: 5000,
+                maxRedirects: 5,
+            }),
+        }),
+
+        ServeStaticModule.forRoot({
+            rootPath: join(__dirname, '.', 'public'),
+            exclude: ['/api*'],
         }),
 
         I18nModule.forRoot({
@@ -53,8 +67,11 @@ import  DailyRotateFile from 'winston-daily-rotate-file';
                     level: 'debug',
                     datePattern: 'YYYY-MM-DD-HH',
                     zippedArchive: true,
-                    maxSize: '20m',
-                    maxFiles: '14d'
+                    maxSize: '200m',
+                    maxFiles: '14d',
+                    auditFile: path.join(__dirname, './../logs/debug/audit.json'),
+                }).on('rotate', function(oldFilename, newFilename) {
+                    // do something fun
                 }),
                 new DailyRotateFile({
                     dirname: path.join(__dirname, './../logs/info/'),
@@ -62,8 +79,11 @@ import  DailyRotateFile from 'winston-daily-rotate-file';
                     level: 'info',
                     datePattern: 'YYYY-MM-DD-HH',
                     zippedArchive: true,
-                    maxSize: '20m',
-                    maxFiles: '14d'
+                    maxSize: '200m',
+                    maxFiles: '14d',
+                    auditFile: path.join(__dirname, './../logs/info/audit.json'),
+                }).on('rotate', function(oldFilename, newFilename) {
+                    // do something fun
                 }),
                 new DailyRotateFile({
                     dirname: path.join(__dirname, './../logs/error/'),
@@ -71,8 +91,11 @@ import  DailyRotateFile from 'winston-daily-rotate-file';
                     level: 'error',
                     datePattern: 'YYYY-MM-DD-HH',
                     zippedArchive: true,
-                    maxSize: '20m',
-                    maxFiles: '14d'
+                    maxSize: '200m',
+                    maxFiles: '14d',
+                    auditFile: path.join(__dirname, './../logs/error/audit.json'),
+                }).on('rotate', function(oldFilename, newFilename) {
+                    // do something fun
                 }),
             ],
         }),
