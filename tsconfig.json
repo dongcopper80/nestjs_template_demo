@@ -18,5 +18,8 @@
         "forceConsistentCasingInFileNames": false,
         "noFallthroughCasesInSwitch": false,
         "esModuleInterop": true
+    },
+    "tsNode": {
+        "ignore": ["/node_modules/", "/chalk/source/index.js"]
     }
 }

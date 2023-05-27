@@ -12,8 +12,26 @@ const API_PREFIX: string = process.env.API_PREFIX || 'api/v1';
 
 const SWAGGER_PREFIX: string = process.env.SWAGGER_PREFIX || 'google/swagger';
 
+const ACCESS_TOKEN: string = process.env.ACCESS_TOKEN || 'access-token';
+const ACCESS_TOKEN_SECRET: string = process.env.ACCESS_TOKEN_SECRET || 'access-token-key';
+const REFRESH_TOKEN: string = process.env.REFRESH_TOKEN || 'refresh-token';
+const REFRESH_TOKEN_SECRET: string = process.env.REFRESH_TOKEN_SECRET || 'refresh-token-key';
+const EMAIL_TOKEN: string = process.env.EMAIL_TOKEN || 'email-token';
+const EMAIL_TOKEN_SECRET: string = process.env.EMAIL_TOKEN_SECRET || 'email-token-key';
+const RESETPASS_TOKEN: string = process.env.RESETPASS_TOKEN || 'resetpass-token';
+const RESETPASS_TOKEN_SECRET: string = process.env.RESETPASS_TOKEN_SECRET || 'resetpass-token-key';
+
 export {
+    PRIMARY_COLOR,
     PORT,
     API_PREFIX,
-    SWAGGER_PREFIX
+    SWAGGER_PREFIX,
+    ACCESS_TOKEN,
+    ACCESS_TOKEN_SECRET,
+    REFRESH_TOKEN,
+    REFRESH_TOKEN_SECRET,
+    EMAIL_TOKEN,
+    EMAIL_TOKEN_SECRET,
+    RESETPASS_TOKEN,
+    RESETPASS_TOKEN_SECRET,
 };

@@ -4,7 +4,9 @@ import { AppService } from './app.service';
 import * as path from 'path';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { AcceptLanguageResolver, I18nJsonLoader, I18nModule, QueryResolver } from 'nestjs-i18n';
-
+import { utilities as nestWinstonModuleUtilities, WinstonModule } from 'nest-winston';
+import * as winston from 'winston';
+import  DailyRotateFile from 'winston-daily-rotate-file';
 
 @Module({
     imports: [
@@ -34,6 +36,44 @@ import { AcceptLanguageResolver, I18nJsonLoader, I18nModule, QueryResolver } fro
             resolvers: [
                 { use: QueryResolver, options: ['lang'] },
                 AcceptLanguageResolver,
+            ],
+        }),
+
+        WinstonModule.forRoot({
+            format: winston.format.combine(
+                winston.format.timestamp(),
+                winston.format.json(),
+                nestWinstonModuleUtilities.format.nestLike('MyLogger', { prettyPrint: true }),
+            ),
+            transports: [
+                new winston.transports.Console(),
+                new DailyRotateFile({
+                    dirname: path.join(__dirname, './../logs/debug/'), //path to where save loggin result 
+                    filename: 'debug-%DATE%.log', //name of file where will be saved logging result
+                    level: 'debug',
+                    datePattern: 'YYYY-MM-DD-HH',
+                    zippedArchive: true,
+                    maxSize: '20m',
+                    maxFiles: '14d'
+                }),
+                new DailyRotateFile({
+                    dirname: path.join(__dirname, './../logs/info/'),
+                    filename: 'info-%DATE%.log',
+                    level: 'info',
+                    datePattern: 'YYYY-MM-DD-HH',
+                    zippedArchive: true,
+                    maxSize: '20m',
+                    maxFiles: '14d'
+                }),
+                new DailyRotateFile({
+                    dirname: path.join(__dirname, './../logs/error/'),
+                    filename: 'error-%DATE%.log',
+                    level: 'error',
+                    datePattern: 'YYYY-MM-DD-HH',
+                    zippedArchive: true,
+                    maxSize: '20m',
+                    maxFiles: '14d'
+                }),
             ],
         }),
     ],
