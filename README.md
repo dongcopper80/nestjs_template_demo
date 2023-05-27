@@ -119,7 +119,7 @@ $ npm run start
                                          
                🍷  Donate: https://opencollective.com/nest
 
-[http://localhost:7227/?lang=vi] http://localhost:7227/?lang=vi
+http://localhost:7227/api/v1?lang=vi
 
 npx prisma init 
 
