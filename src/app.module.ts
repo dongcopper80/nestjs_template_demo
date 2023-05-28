@@ -13,6 +13,11 @@ import { CacheModule } from '@nestjs/cache-manager';
 import type { RedisClientOptions } from 'redis';
 import { redisStore } from 'cache-manager-redis-yet';
 import { RedisModule } from './redis.module';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import GraphQLJSON from 'graphql-type-json';
+import ormconfig from './config/ormconfig';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
     imports: [
@@ -57,11 +62,40 @@ import { RedisModule } from './redis.module';
             ],
         }),
 
+        TypeOrmModule.forRoot(ormconfig[0]), //default
+
+        TypeOrmModule.forRoot(ormconfig[1]), //other db
+
         /*CacheModule.register({
             isGlobal: true,
             ttl: 5, // seconds
             max: 10000, // maximum number of items in cache
         }),*/
+
+//        GraphQLModule.forRoot<ApolloDriverConfig>({
+//            driver: ApolloDriver,
+//            playground: false,
+//            installSubscriptionHandlers: true,
+//            autoSchemaFile: true,
+//            sortSchema: true,
+//            typePaths: ['./**/*.graphql'],
+//            definitions: {
+//                path: join(process.cwd(), 'src/graphql.ts'),
+//                outputAs: 'class',
+//            },
+//            subscriptions: {
+//                'graphql-ws': {
+//                    path: '/graphql'
+//                },
+//            },
+//            buildSchemaOptions: {
+//                dateScalarMode: 'timestamp',
+//                numberScalarMode: 'integer',
+//            },
+//            resolvers: { 
+//                JSON: GraphQLJSON
+//            },
+//        }),
 
         WinstonModule.forRoot({
             format: winston.format.combine(
