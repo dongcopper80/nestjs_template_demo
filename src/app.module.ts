@@ -9,6 +9,10 @@ import path, { join } from 'path';
 import  DailyRotateFile from 'winston-daily-rotate-file';
 import { HttpModule } from '@nestjs/axios';
 import { ServeStaticModule } from '@nestjs/serve-static';
+import { CacheModule } from '@nestjs/cache-manager';
+import type { RedisClientOptions } from 'redis';
+import { redisStore } from 'cache-manager-redis-yet';
+import { RedisModule } from './redis.module';
 
 @Module({
     imports: [
@@ -52,6 +56,12 @@ import { ServeStaticModule } from '@nestjs/serve-static';
                 AcceptLanguageResolver,
             ],
         }),
+
+        /*CacheModule.register({
+            isGlobal: true,
+            ttl: 5, // seconds
+            max: 10000, // maximum number of items in cache
+        }),*/
 
         WinstonModule.forRoot({
             format: winston.format.combine(
@@ -99,6 +109,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
                 }),
             ],
         }),
+        RedisModule,
     ],
     controllers: [AppController],
     providers: [AppService],

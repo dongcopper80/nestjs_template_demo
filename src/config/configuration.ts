@@ -21,6 +21,11 @@ const EMAIL_TOKEN_SECRET: string = process.env.EMAIL_TOKEN_SECRET || 'email-toke
 const RESETPASS_TOKEN: string = process.env.RESETPASS_TOKEN || 'resetpass-token';
 const RESETPASS_TOKEN_SECRET: string = process.env.RESETPASS_TOKEN_SECRET || 'resetpass-token-key';
 
+const REDIS_HOST: string = process.env.REDIS_HOST || 'localhost';
+const REDIS_PORT: number = +process.env.REDIS_PORT || 6379;
+const REDIS_TLS: number = +process.env.REDIS_TLS || 600;
+const REDIS_PASSWORD: string = process.env.REDIS_PASSWORD || '';
+
 export {
     PRIMARY_COLOR,
     PORT,
@@ -34,4 +39,8 @@ export {
     EMAIL_TOKEN_SECRET,
     RESETPASS_TOKEN,
     RESETPASS_TOKEN_SECRET,
+    REDIS_HOST,
+    REDIS_PORT,
+    REDIS_TLS,
+    REDIS_PASSWORD
 };

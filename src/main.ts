@@ -21,6 +21,7 @@ import { LoggingInterceptor } from './interceptors/logging.interceptor';
 import { TimeoutInterceptor } from './interceptors/timeout.interceptor';
 import { LoggerMiddleware } from './logger/logger.middleware';
 import { HttpExceptionFilter } from './filters/http-exception.filter';
+import compression from 'compression';
 
 async function bootstrap() {
 
@@ -55,6 +56,8 @@ async function bootstrap() {
     app.useGlobalInterceptors(new TimeoutInterceptor());
     app.useGlobalFilters(new HttpExceptionFilter());
     app.use(LoggerMiddleware);
+
+    app.use(compression());
 
     app.use(helmet({
         contentSecurityPolicy: false,
