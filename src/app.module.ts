@@ -19,6 +19,7 @@ import GraphQLJSON from 'graphql-type-json';
 import ormconfig from './config/ormconfig';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { APP_INTERCEPTOR } from '@nestjs/core';
+import { AppGateway } from './app.gateway';
 
 @Module({
     imports: [
@@ -153,6 +154,7 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
             provide: APP_INTERCEPTOR,
             useClass: CacheInterceptor,
         },
+        AppGateway,
     ],
 })
 
