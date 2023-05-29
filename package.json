@@ -86,6 +86,7 @@
     "compression": "^1.7.4",
     "consolidate": "^0.16.0",
     "cookie-parser": "^1.4.6",
+    "crypto": "^1.0.1",
     "csrf-csrf": "^2.2.4",
     "csurf": "^1.11.0",
     "dotenv": "^16.0.3",

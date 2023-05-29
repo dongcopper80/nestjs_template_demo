@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { EventEmitterModule } from '@nestjs/event-emitter';
@@ -9,7 +9,7 @@ import path, { join } from 'path';
 import  DailyRotateFile from 'winston-daily-rotate-file';
 import { HttpModule } from '@nestjs/axios';
 import { ServeStaticModule } from '@nestjs/serve-static';
-import { CacheModule } from '@nestjs/cache-manager';
+import { CacheModule, CacheInterceptor } from '@nestjs/cache-manager';
 import type { RedisClientOptions } from 'redis';
 import { redisStore } from 'cache-manager-redis-yet';
 import { RedisModule } from './redis.module';
@@ -18,6 +18,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import GraphQLJSON from 'graphql-type-json';
 import ormconfig from './config/ormconfig';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { APP_INTERCEPTOR } from '@nestjs/core';
 
 @Module({
     imports: [
@@ -146,7 +147,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
         RedisModule,
     ],
     controllers: [AppController],
-    providers: [AppService],
+    providers: [
+        AppService,
+        {
+            provide: APP_INTERCEPTOR,
+            useClass: CacheInterceptor,
+        },
+    ],
 })
 
 export class AppModule {}

@@ -91,6 +91,8 @@ $ npm run start
 
 http://localhost:7227/api/v1?lang=vi
 
+http://localhost:7227/api/v1/welcome
+
 http://localhost:7227/google/swagger
 
 npx prisma init 
