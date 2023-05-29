@@ -37,6 +37,34 @@ async function bootstrap() {
     app.disable('x-powered-by');
     app.setGlobalPrefix(API_PREFIX);
 
+    const config = new DocumentBuilder()
+        .setTitle('Game Server API')
+        .setDescription('The description for Game Server API')
+        .setVersion('1.0')
+        //.addTag('api')
+        .addBearerAuth(
+            {
+                // I was also testing it without prefix 'Bearer ' before the JWT
+                description: `[just text field] Please enter token in following format: Bearer <JWT>`,
+                name: 'Authorization',
+                bearerFormat: 'Bearer', // I`ve tested not to use this field, but the result was the same
+                scheme: 'Bearer',
+                type: 'http', // I`ve attempted type: 'apiKey' too
+                in: 'Header'
+            },
+            'access-token', // This name here is important for matching up with @ApiBearerAuth() in your controller!
+        )
+        .addSecurity('basic', {
+            type: 'http',
+            scheme: 'basic',
+        })
+        //.addCookieAuth('optional-session-id')
+        .build();
+
+    const document = SwaggerModule.createDocument(app, config);
+
+    SwaggerModule.setup(SWAGGER_PREFIX, app, document);
+
     app.useGlobalPipes(new ValidationPipe());
 
     app.useLogger(app.get(WINSTON_MODULE_NEST_PROVIDER));
