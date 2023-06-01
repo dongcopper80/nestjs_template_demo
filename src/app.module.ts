@@ -20,6 +20,7 @@ import ormconfig from './config/ormconfig';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { AppGateway } from './app.gateway';
+import { EventsModule } from './events/events.module';
 
 @Module({
     imports: [
@@ -146,6 +147,7 @@ import { AppGateway } from './app.gateway';
             ],
         }),
         RedisModule,
+        EventsModule,
     ],
     controllers: [AppController],
     providers: [

@@ -26,6 +26,8 @@ const REDIS_PORT: number = +process.env.REDIS_PORT || 6379;
 const REDIS_TLS: number = +process.env.REDIS_TLS || 600;
 const REDIS_PASSWORD: string = process.env.REDIS_PASSWORD || '';
 
+const EXPIRATION_DATE: number = +process.env.EXPIRATION_DATE || 1;
+
 export {
     PRIMARY_COLOR,
     PORT,
@@ -42,5 +44,6 @@ export {
     REDIS_HOST,
     REDIS_PORT,
     REDIS_TLS,
-    REDIS_PASSWORD
+    REDIS_PASSWORD,
+    EXPIRATION_DATE
 };
